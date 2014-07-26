@@ -8,9 +8,4 @@
             android:entries="@array/dataLimitTexts"
             android:entryValues="@array/dataLimitValues"
         />
-		<Preference
-		    android:key="bilingCost"
-		    android:title="Edit billing cost"
-		    android:summary="Change how much you pay monthly for your data plan"
-		/>
 </PreferenceScreen>

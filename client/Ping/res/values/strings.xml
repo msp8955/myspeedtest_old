@@ -6,10 +6,8 @@
     <string name="title_activity_start">StartActivity</string>
     <string name="configuration">CONFIGURATION</string>
     <string name="title_activity_data_cap">CHOOSE DATA LIMIT</string>
-    <string name="title_activity_billing_cost">CHOOSE BILLING COST</string>
     <string name="title_activity_main">MEASUREMENT</string>
     <string name="title_activity_settings">SETTINGS</string>
-    <string name="title_activity_prepaid">PREPAID</string>
     <string name="title_activity_contact">ENTER CONTACT DETAILS</string>
     <string name="accept">Accept</string>
     <string name="decline">Decline</string>
@@ -28,8 +26,6 @@
     <string name="save">Save</string>
     <string name="back">Back</string>
     <string name="message_data_cap">Which of the following options is the closest to your monthly data plan limit?</string>
-    <string name="message_billing_cost">How much do you pay per month for your current data plan?</string>
-    <string name="message_prepaid">Add a new prepaid card</string>
     <string name="message_contact">Enter your email address to be eligible for any prizes offered for participating in any of our studies. Without your contact details, the research team will not be able to contact you due to our anonymization policy</string>
     <string name="ga_api_key">UA\-35919226\-1</string>
     <string name="action_settings">Settings</string>

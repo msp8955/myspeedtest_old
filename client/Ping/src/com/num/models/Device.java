@@ -168,9 +168,6 @@ public class Device implements MainModel {
 					UserDataHelper userhelp = new UserDataHelper(getContext());
 	
 					obj.putOpt("datacap",userhelp.getDataCap());
-					obj.putOpt("currency", userhelp.getCurrency());
-					obj.putOpt("dataprice", userhelp.getBillingCost());
-					obj.putOpt("prepaiddata", userhelp.getPrepaidData());
 					obj.putOpt("emailAddress", userhelp.getEmailData());
 				}
 			}

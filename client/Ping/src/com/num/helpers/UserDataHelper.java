@@ -21,32 +21,13 @@ public class UserDataHelper {
 		PreferencesUtil.setDataInt("dataLimit", dataCap, context);
 	}
 	
-	public int getBillingCost() {
-		return PreferencesUtil.getDataInt("billingCost", context);
-	}
-	public void setBillingCost(int cost) {
-		PreferencesUtil.setDataInt("billingCost", cost, context);
-	}
-	
-	public String getCurrency(){
-		return PreferencesUtil.getDataString("currency", context);
-	}
-	public void setCurrency(String c){
-		PreferencesUtil.setDataString("currency", c, context);
-	}
-	
 	public int getDataEnable() {
 		return PreferencesUtil.getDataInt("dataenable", context);
 	}
 	public void setDataEnable(int val) {
 		PreferencesUtil.setDataInt("dataenable", val, context);
 	}
-	public float getPrepaidData() {
-		return PreferencesUtil.getDataFloat("prepaidData", context);
-	}
-	public void setPrepaidData(float data) {
-		PreferencesUtil.setDataFloat("prepaidData", data, context);
-	}
+	
 	public String getEmailData() {
 		return PreferencesUtil.getDataString("emailData", context);
 	}
@@ -55,9 +36,7 @@ public class UserDataHelper {
 	}
 	
 	public boolean isFilled(){		
-		return PreferencesUtil.contains("dataLimit", context) && 
-				PreferencesUtil.contains("billingCost", context) &&
-				PreferencesUtil.contains("currency", context);
+		return PreferencesUtil.contains("dataLimit", context);
 	}
 
 }
