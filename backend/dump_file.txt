@@ -1,0 +1,476 @@
+--
+-- PostgreSQL database dump
+--
+
+drop database androidperformance;
+create database androidperformance;
+\c androidperformance;
+
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+CREATE DOMAIN eventstamp_t AS timestamp without time zone;
+
+CREATE DOMAIN inetn_t AS inet ;
+SET default_tablespace = '';
+SET default_with_oids = false;
+
+CREATE SEQUENCE measurement_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483648
+    CACHE 1;
+    
+
+SELECT pg_catalog.setval('measurement_seq', 1, false);
+
+CREATE SEQUENCE lastmile_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483648
+    CACHE 1;
+    
+SELECT pg_catalog.setval('lastmile_seq', 1, false);
+
+CREATE SEQUENCE warmup_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483648
+    CACHE 1;
+    
+SELECT pg_catalog.setval('warmup_seq', 1, false);
+
+CREATE SEQUENCE ping_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483648
+    CACHE 1;
+
+SELECT pg_catalog.setval('ping_seq', 1, false);
+
+CREATE SEQUENCE values_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483648
+    CACHE 1;
+
+SELECT pg_catalog.setval('values_seq', 1, false);
+
+CREATE SEQUENCE link_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483648
+    CACHE 1;
+
+SELECT pg_catalog.setval('link_seq', 1, false);
+
+CREATE SEQUENCE wifi_neighbor_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483648
+    CACHE 1;
+
+SELECT pg_catalog.setval('wifi_neighbor_seq', 1, false);
+
+
+CREATE SEQUENCE application_use_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483648
+    CACHE 1;
+
+SELECT pg_catalog.setval('application_use_seq', 1, false);
+
+CREATE SEQUENCE screen_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483648
+    CACHE 1;
+
+SELECT pg_catalog.setval('screen_seq', 1, false);
+
+
+CREATE TABLE gps(
+	measurementid integer,
+	latitude float ,
+	longitude float ,
+	altitude float 
+);
+
+CREATE TABLE wifi_hotspot(
+	macaddress varchar(40) ,
+	ssid varchar(40),
+	frequency integer,
+	capability varchar(20)	
+);
+
+CREATE TABLE wifi(
+	measurementid integer,
+	ipaddress varchar(15),
+	detailedinfo varchar(40),
+	rssi integer,
+	signalstrength integer,
+	speed integer,
+	units varchar(10),
+	connection varchar(40)
+);
+
+CREATE TABLE wifi_neighbor(
+	wifi_neighbor_id integer DEFAULT nextval('wifi_neighbor_seq'::regclass),
+	macaddress varchar(40),
+	ispreferred integer,
+	signallevel integer,
+	measurementid integer DEFAULT nextval('measurement_seq'::regclass)
+	
+);
+
+CREATE TABLE battery(
+	measurementid integer,
+	technology varchar(20),
+	ispresent integer,
+	plugged integer,
+	scale integer,
+	health integer,
+	voltage integer,
+	level integer,
+	temperature integer,
+	status integer
+	
+);
+
+CREATE TABLE link(
+	linkid integer DEFAULT nextval('link_seq'::regclass) ,
+	count int,
+	message_size bigint,
+	duration integer,
+	speed float ,
+	port integer ,
+	ip_address varchar(20) 
+);
+
+CREATE TABLE throughput(
+	measurementid integer,
+	uplinkid integer DEFAULT nextval('link_seq'::regclass) ,
+	downlinkid integer DEFAULT nextval('link_seq'::regclass) 
+);
+
+CREATE TABLE device (
+    deviceid varchar(40) ,
+    phonetype varchar(20),
+    phonenumber varchar(40) ,
+    softwareversion varchar(20),
+    phonemodel varchar(20),
+    androidversion varchar(20),
+    phonebrand varchar(20),
+    devicedesign varchar(20),
+    manufacturer varchar(20),
+    productname varchar(20),
+    radioversion varchar(20),
+    boardname varchar(20),
+    serialnumber varchar(40),
+    networkcountry varchar(2),
+    networkname varchar(25),
+    datacap integer,
+    billingcycle integer
+);
+
+CREATE TABLE screen (
+	screenid integer DEFAULT nextval('screen_seq'::regclass) ,
+	deviceid varchar(40) ,
+    "time" timestamp without time zone ,
+    "localtime" timestamp without time zone ,
+    turnedon boolean
+);
+
+CREATE TABLE network (
+    measurementid integer,
+    networktype varchar(10),
+    connectiontype varchar(10),
+    wifistate varchar(20),
+    datastate varchar(30),
+    dataactivity varchar(30),
+    signalstrength varchar(3),
+	cellid varchar(20),
+	celltype varchar(10),
+    celllac varchar(20),
+    longitude float,
+    latitude float,
+    systemid int,
+    networkid int
+);
+
+CREATE TABLE kill_list(
+	deviceid varchar(40)
+);
+
+CREATE TABLE sim (
+    serialnumber varchar(40) ,
+    state varchar(20),
+    operatorCode varchar(8),
+    operatorName varchar(20),
+    networkcountry varchar(5)
+);
+
+CREATE TABLE measurement (
+    measurementid integer DEFAULT nextval('measurement_seq'::regclass) ,
+    "time" timestamp without time zone ,
+    "localtime" timestamp without time zone ,
+    deviceid varchar(40),
+    ismanual boolean
+);
+
+CREATE TABLE usage (
+	measurementid integer,
+	total_sent bigint ,
+	total_recv bigint ,
+	total_till_now bigint,
+	mobile_sent bigint ,
+	mobile_recv bigint,
+	mobile_till_now bigint 
+);
+
+CREATE TABLE application (
+	name varchar(20) ,
+	package varchar(50) 
+);
+
+CREATE TABLE application_use (
+	application_useid integer DEFAULT nextval('application_use_seq'::regclass) ,
+	package varchar(50) ,
+	total_sent bigint ,
+	total_recv bigint ,
+	isrunning boolean,
+	measurementid integer DEFAULT nextval('measurement_seq'::regclass) 
+);
+
+CREATE TABLE state (
+	measurementid integer,
+	cellid varchar(20),
+	networktype varchar(20),
+	deviceid varchar(40),
+	weekday integer,
+	timeslice integer
+);
+
+CREATE TABLE values (
+	valueid integer DEFAULT nextval('values_seq'::regclass) ,
+	frequency_secs integer,
+	throughput_freq integer,
+	uplink_port integer,
+	uplink_duration integer,
+	downlink_port integer,
+	downlink_duration integer,
+	tcp_headersize integer,
+	tcp_packetsize integer,
+	throughput_server_address text,
+	api_server_address text,
+	signalstrength_timeout integer,
+	wifi_timeout integer,
+	unavailable_cellid varchar(10),
+	unavailable_celllac varchar(10),
+	threadpool_max_size integer,
+	threadpool_keepalive_sec integer
+); 
+
+CREATE TABLE ping_servers(
+	ipaddress varchar(20),
+	tag varchar(20)
+);
+
+
+CREATE TABLE ping (
+    avg double precision ,
+    stdev double precision ,
+    min double precision ,
+    max double precision ,
+    scrip varchar(20) ,
+    dstip varchar(20) ,
+    "time" timestamp without time zone,
+    measurementid integer DEFAULT nextval('measurement_seq'::regclass) ,
+    pingid integer DEFAULT nextval('ping_seq'::regclass) 
+);
+
+CREATE TABLE calculate_log (
+
+	"log_time" timestamp without time zone,
+	"time" timestamp without time zone
+);
+
+CREATE TABLE error_log (
+
+	"log_time" timestamp without time zone,
+	deviceid varchar(40),
+	error_text text,
+	user_agent text,
+    remote_addr varchar(20)
+);
+
+CREATE TABLE client_log (
+
+	"log_time" timestamp without time zone,
+	deviceid varchar(40),
+	error_text text,
+	tag text,
+	value integer
+);
+
+
+CREATE TABLE lastmile (
+    avg double precision ,
+    stdev double precision ,
+    min double precision ,
+    max double precision ,
+    scrip varchar(20) ,
+    dstip varchar(20) ,
+    "time" timestamp without time zone,
+    firstip varchar(20),
+    hopcount integer,
+    measurementid integer DEFAULT nextval('measurement_seq'::regclass),
+    lastmileid integer DEFAULT nextval('lastmile_seq'::regclass) 
+);
+
+CREATE TABLE warmup_experiment (
+    lowest double precision ,
+    highest double precision ,    
+    version varchar(10),
+    dstip varchar(20),
+    total_count integer,
+    gap double precision,
+    measurementid integer DEFAULT nextval('measurement_seq'::regclass) 
+);
+
+CREATE TABLE warmup_ping (
+    value double precision,    
+    sequence_count integer,
+    period double precision,
+    warmupid integer DEFAULT nextval('warmup_seq'::regclass),
+    measurementid integer DEFAULT nextval('measurement_seq'::regclass) 
+);
+
+ALTER TABLE ONLY device
+    ADD CONSTRAINT device_pkey  PRIMARY KEY (deviceid);
+ALTER TABLE ONLY sim
+    ADD CONSTRAINT sim_pkey  PRIMARY KEY (serialnumber);
+ALTER TABLE ONLY application
+    ADD CONSTRAINT application_pkey PRIMARY KEY (package);
+ALTER TABLE ONLY measurement
+    ADD CONSTRAINT measurement_pkey PRIMARY KEY (measurementid);
+ALTER TABLE ONLY ping
+    ADD CONSTRAINT ping_pkey PRIMARY KEY (pingid);
+ALTER TABLE ONLY network
+    ADD CONSTRAINT network_measurement_pkey PRIMARY KEY (measurementid);
+ALTER TABLE ONLY throughput
+    ADD CONSTRAINT throughput_measurement_pkey PRIMARY KEY (measurementid);
+ALTER TABLE ONLY link
+    ADD CONSTRAINT link_pkey PRIMARY KEY (linkid);
+ALTER TABLE ONLY gps
+    ADD CONSTRAINT gps_measurement_pkey PRIMARY KEY (measurementid);
+ALTER TABLE ONLY battery
+    ADD CONSTRAINT battery_measurement_pkey PRIMARY KEY (measurementid);
+ALTER TABLE ONLY usage
+    ADD CONSTRAINT usage_measurement_pkey PRIMARY KEY (measurementid);
+ALTER TABLE ONLY kill_list
+    ADD CONSTRAINT kill_deviceid_pkey PRIMARY KEY (deviceid);
+ALTER TABLE ONLY ping_servers
+	ADD CONSTRAINT ping_servers_pkey PRIMARY KEY (ipaddress);
+ALTER TABLE ONLY error_log
+	ADD CONSTRAINT error_log_pkey PRIMARY KEY (log_time);
+ALTER TABLE ONLY client_log
+	ADD CONSTRAINT client_log_pkey PRIMARY KEY (log_time);
+ALTER TABLE ONLY calculate_log
+	ADD CONSTRAINT calculate_log_pkey PRIMARY KEY (log_time);	
+ALTER TABLE ONLY application_use
+	ADD COLUMN total_diff bigint;	
+
+	
+   
+ALTER TABLE ONLY application_use
+    ADD CONSTRAINT application_use_pkey PRIMARY KEY (application_useid);
+ALTER TABLE ONLY wifi
+    ADD CONSTRAINT wifi_measurement_pkey PRIMARY KEY (measurementid);
+ALTER TABLE ONLY wifi_hotspot
+    ADD CONSTRAINT wifi_hotspot_pkey PRIMARY KEY (macaddress);
+ALTER TABLE ONLY wifi_neighbor
+    ADD CONSTRAINT wifi_neighbor_pkey PRIMARY KEY (wifi_neighbor_id);
+ALTER TABLE ONLY state
+    ADD CONSTRAINT state_measurement_pkey PRIMARY KEY (measurementid);
+ALTER TABLE ONLY screen
+    ADD CONSTRAINT screen_pkey PRIMARY KEY (screenid);
+ALTER TABLE ONLY values
+    ADD CONSTRAINT values_pkey PRIMARY KEY (valueid);      
+
+ALTER TABLE ONLY ping
+    ADD CONSTRAINT ping_measurementid_fkey FOREIGN KEY (measurementid) REFERENCES measurement(measurementid);
+ALTER TABLE ONLY throughput
+    ADD CONSTRAINT throughput_uplinkid_fkey FOREIGN KEY (uplinkid) REFERENCES link(linkid),
+    ADD CONSTRAINT throughput_downlinkid_fkey FOREIGN KEY (downlinkid) REFERENCES link(linkid);
+ALTER TABLE ONLY measurement
+	ADD CONSTRAINT measurement_deviceid_fkey FOREIGN KEY (deviceid) REFERENCES device(deviceid);
+ALTER TABLE ONLY application_use
+    ADD CONSTRAINT application_use_measurementid_fkey FOREIGN KEY (measurementid) REFERENCES measurement(measurementid),
+    ADD CONSTRAINT application_use_package_fkey FOREIGN KEY (package) REFERENCES application(package);
+ALTER TABLE ONLY wifi_neighbor
+    ADD CONSTRAINT wifi_neighbor_measurementid_fkey FOREIGN KEY (measurementid) REFERENCES measurement(measurementid),
+    ADD CONSTRAINT wifi_neighbor_macaddress_fkey FOREIGN KEY (macaddress) REFERENCES wifi_hotspot(macaddress);
+ALTER TABLE ONLY wifi
+    ADD CONSTRAINT wifi_macaddress_fkey FOREIGN KEY (connection) REFERENCES wifi_hotspot(macaddress);
+ALTER TABLE ONLY device
+	ADD CONSTRAINT device_serialnumber_fkey FOREIGN KEY (serialnumber) REFERENCES sim(serialnumber);
+ALTER TABLE ONLY lastmile
+    ADD CONSTRAINT lastmile_measurementid_fkey FOREIGN KEY (measurementid) REFERENCES measurement(measurementid);
+ALTER TABLE ONLY warmup_ping
+    ADD CONSTRAINT warmup_measurementid_fkey FOREIGN KEY (measurementid) REFERENCES measurement(measurementid);
+
+
+alter sequence measurement_seq owned by measurement.measurementid;
+
+alter sequence link_seq owned by link.linkid;
+
+alter sequence application_use_seq owned by application_use.application_useid;
+
+alter sequence wifi_neighbor_seq owned by wifi_neighbor.wifi_neighbor_id;
+
+alter sequence screen_seq owned by screen.screenid;
+
+alter sequence values_seq owned by values.valueid;
+
+alter sequence warmup_seq owned by warmup_ping.warmupid;
+
+insert into kill_list VALUES('144c38fa58e8e98c42c239354820b43676838fa9');
+
+insert into values (frequency_secs,throughput_freq,uplink_port,uplink_duration,downlink_port,downlink_duration,tcp_headersize,tcp_packetsize,throughput_server_address,api_server_address,signalstrength_timeout,wifi_timeout,unavailable_cellid,unavailable_celllac,threadpool_max_size, threadpool_keepalive_sec)  VALUES(900,80,9912,25000,9710,20000,54,1380,'ruggles.gtnoise.net','ruggles.gtnoise.net',10000,10000,'65535','65535',10,30);
+
+insert into ping_servers VALUES('143.215.131.173','Atlanta, GA');
+insert into ping_servers VALUES('143.225.229.254', 'Napoli, ITALY');
+insert into ping_servers VALUES('128.48.110.150', 'Oakland, CA');
+insert into ping_servers VALUES('localhost', 'localhost');
+insert into ping_servers VALUES('www.google.com', 'Google');
+insert into ping_servers VALUES('www.facebook.com', 'Facebook');
+
+
+

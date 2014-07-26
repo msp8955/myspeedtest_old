@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.num"
+    android:versionCode="328"
+    android:versionName="3.2.8" >
+
+    <uses-sdk android:minSdkVersion="9" />
+
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.BATTERY_STATS" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.WAKE_LOCK" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_UPDATES" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <application
+        android:name="com.num.Values"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name" >
+        <activity
+            android:name="com.num.activities.StartActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="nosensor" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.num.activities.PrivacyActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="nosensor" >
+        </activity>
+        <activity
+            android:name="com.num.activities.EmailActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="nosensor" >
+        </activity>
+        <activity
+            android:name="com.num.activities.GraphActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="nosensor" >
+        </activity>
+        <activity
+            android:name="com.num.activities.IndividualAppActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="nosensor" >
+        </activity>
+        <activity
+            android:name="com.num.activities.AnalysisActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="nosensor" >
+        </activity>
+        <activity
+            android:name="com.num.activities.FullDisplayActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="nosensor" >
+        </activity>
+        <activity
+            android:name="com.num.activities.SpeedTestDisplayActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="nosensor" >
+        </activity>
+        <activity
+            android:name="com.num.activities.DisplayActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="nosensor" >
+        </activity>
+        <activity
+            android:name="com.num.activities.UserFormActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="nosensor" >
+        </activity>
+        <activity
+            android:name="com.num.activities.DataFormActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="nosensor" >
+        </activity>
+        <activity
+            android:name="com.num.activities.AboutUsActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="nosensor" >
+        </activity>
+        <activity
+            android:name="com.num.activities.PreviousActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="nosensor" >
+        </activity>
+        <activity
+            android:name="com.num.activities.RunActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="nosensor" >
+        </activity>
+        <activity
+            android:name="com.num.activities.TourActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="nosensor" >
+        </activity>
+
+        <service
+            android:name="com.num.services.MeasurementService"
+            android:enabled="true"
+            android:permission="android.permission.INTERNET" >
+        </service>
+
+        <receiver android:name="com.num.receivers.StartupIntentReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+
+                <category android:name="android.intent.category.HOME" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name="com.num.activities.SettingsActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.num.StartActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.num.activities.DataCapActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.num.activities.BillingCycleActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.num.activities.BillingCostActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.num.activities.MainActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.num.activities.PrepaidActivity"
+            android:label="@string/app_name" >
+        </activity>
+    </application>
+
+</manifest>

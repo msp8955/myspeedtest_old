@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen android:key="preferences"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+		<ListPreference
+            android:key="dataLimit"
+            android:title="Edit data plan limit"
+            android:summary="Change monthly data plan limit"
+            android:entries="@array/dataLimitTexts"
+            android:entryValues="@array/dataLimitValues"
+        />
+		<Preference
+		    android:key="billingCycle"
+		    android:title="Edit billing cycle"
+		    android:summary="Change day of month that resets billing cycle"
+		/>
+		<Preference
+		    android:key="bilingCost"
+		    android:title="Edit billing cost"
+		    android:summary="Change how much you pay monthly for your data plan"
+		/>
+</PreferenceScreen>
