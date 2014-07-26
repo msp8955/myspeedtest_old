@@ -66,39 +66,6 @@ public class SettingsActivity extends Activity {
 						startActivity(myIntent);
 					}
 				}, R.drawable.email, null)));
-		/* commenting these out since we are not collecting these anymore */
-//		if(userhelp.getDataCap() == UserDataHelper.PREPAID){
-//			cells.add(new Row(new ActivityItem("Prepaid Information ",
-//					"Add a new prepaid card", new Handler() {
-//						public void handleMessage(Message msg) {
-//							Intent myIntent = new Intent(activity,
-//									PrepaidActivity.class);
-//							myIntent.putExtra("force", true);
-//							startActivity(myIntent);
-//						}
-//					}, R.drawable.price, null)));
-//		}
-//		else if(userhelp.getDataCap() != UserDataHelper.NONE){
-//			cells.add(new Row(new ActivityItem("Choose Monthly Price",
-//					"Choose how much you pay by month", new Handler() {
-//						public void handleMessage(Message msg) {
-//							Intent myIntent = new Intent(activity,
-//									BillingCostActivity.class);
-//							myIntent.putExtra("force", true);
-//							startActivity(myIntent);
-//						}
-//					}, R.drawable.price, null)));
-//			
-//			cells.add(new Row(new ActivityItem("Choose Billing Cycle",
-//					"Choose when your billing cycle begins", new Handler() {
-//						public void handleMessage(Message msg) {
-//							Intent myIntent = new Intent(activity,
-//									BillingCycleActivity.class);
-//							myIntent.putExtra("force", true);
-//							startActivity(myIntent);
-//						}
-//					}, R.drawable.date, null)));
-//		}
 		ItemAdapter itemadapter = new ItemAdapter(activity, cells);
 		for (Row cell : cells)
 			itemadapter.add(cell);

@@ -75,9 +75,6 @@ public class PrivacyActivity extends TrackedActivity
 			else if(!PreferencesUtil.contains("billingCost",activity) && userhelp.getDataCap() == UserDataHelper.PREPAID){
 				myIntent = new Intent(activity, PrepaidActivity.class);
 			}
-			else if(!PreferencesUtil.contains("billingCycle",activity) && userhelp.getDataCap()!=UserDataHelper.NONE){
-				myIntent = new Intent(activity, BillingCycleActivity.class);
-			}
 			else if(!PreferencesUtil.contains("billingCost",activity) && userhelp.getDataCap()!=UserDataHelper.NONE){
 				myIntent = new Intent(activity, BillingCostActivity.class);
 			}

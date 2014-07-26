@@ -9,11 +9,6 @@
             android:entryValues="@array/dataLimitValues"
         />
 		<Preference
-		    android:key="billingCycle"
-		    android:title="Edit billing cycle"
-		    android:summary="Change day of month that resets billing cycle"
-		/>
-		<Preference
 		    android:key="bilingCost"
 		    android:title="Edit billing cost"
 		    android:summary="Change how much you pay monthly for your data plan"

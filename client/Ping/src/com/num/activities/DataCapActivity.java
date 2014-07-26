@@ -42,27 +42,6 @@ public class DataCapActivity extends Activity {
 		}
 		
 		//Skip if data is already present
-		/* Commenting these out; only collecting data cap and email address for now */
-//		if(!force && PreferencesUtil.contains("dataLimit", this)){
-//			finish();
-//			Intent myIntent = null;
-//			if(!PreferencesUtil.contains("billingCost",activity) && userhelp.getDataCap() == UserDataHelper.PREPAID){
-//				myIntent = new Intent(activity, PrepaidActivity.class);
-//			}
-//			else if(!PreferencesUtil.contains("billingCycle",activity) && userhelp.getDataCap()!=UserDataHelper.NONE){
-//				myIntent = new Intent(activity, BillingCycleActivity.class);
-//			}
-//			else if(!PreferencesUtil.contains("billingCost",activity) && userhelp.getDataCap()!=UserDataHelper.NONE){
-//				myIntent = new Intent(activity, BillingCostActivity.class);
-//			}
-//			else if(!PreferencesUtil.contains("emailData", activity)){
-//				myIntent = new Intent(activity, EmailActivity.class);
-//			}
-//			else {
-//				myIntent = new Intent(activity, MainActivity.class);
-//			}
-//			startActivity(myIntent);
-//		}
 		if(!force && PreferencesUtil.contains("dataLimit", this)){
 			finish();
 			Intent myIntent = null;
@@ -104,14 +83,6 @@ public class DataCapActivity extends Activity {
 					return;			
 				}
 				else{
-//					if(limit_val[checkedRadioButton]==UserDataHelper.PREPAID)
-//						myIntent = new Intent(v.getContext(), PrepaidActivity.class);
-//					else if(limit_val[checkedRadioButton]==UserDataHelper.NONE){
-//						userhelp.setBillingCost(-1);
-//						myIntent = new Intent(v.getContext(), DataFormActivity.class);
-//					}
-//					else
-//						myIntent = new Intent(v.getContext(), BillingCycleActivity.class);
 					if(!PreferencesUtil.contains("emailData", activity)){
 						myIntent = new Intent(v.getContext(), EmailActivity.class);
 					}
@@ -128,7 +99,6 @@ public class DataCapActivity extends Activity {
 			public void onClick(View v) {
 				if(!PreferencesUtil.contains("dataLimit", DataCapActivity.this)){
 					userhelp.setDataCap(limit_val[0]); //default to "don't know"
-//					userhelp.setBillingCost(-1);
 				}
 				finish();
 				if(force){

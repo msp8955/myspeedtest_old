@@ -85,8 +85,6 @@
         </activity>
         <activity android:label="@string/app_name" android:name="com.num.activities.DataCapActivity">
         </activity>
-        <activity android:label="@string/app_name" android:name="com.num.activities.BillingCycleActivity">
-        </activity>
         <activity android:label="@string/app_name" android:name="com.num.activities.BillingCostActivity">
         </activity>
         <activity android:label="@string/app_name" android:name="com.num.activities.MainActivity">

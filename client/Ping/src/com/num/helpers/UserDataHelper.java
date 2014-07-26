@@ -21,13 +21,6 @@ public class UserDataHelper {
 		PreferencesUtil.setDataInt("dataLimit", dataCap, context);
 	}
 	
-	public int getBillingCycle() {
-		return PreferencesUtil.getDataInt("billingCycle", context);
-	}
-	public void setBillingCycle(int billingCycle) {
-		PreferencesUtil.setDataInt("billingCycle", billingCycle, context);
-	}
-	
 	public int getBillingCost() {
 		return PreferencesUtil.getDataInt("billingCost", context);
 	}
@@ -63,7 +56,6 @@ public class UserDataHelper {
 	
 	public boolean isFilled(){		
 		return PreferencesUtil.contains("dataLimit", context) && 
-				PreferencesUtil.contains("billingCycle", context) && 
 				PreferencesUtil.contains("billingCost", context) &&
 				PreferencesUtil.contains("currency", context);
 	}
