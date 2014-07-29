@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/slight_gray" >
+
+    <TabHost
+        android:id="@+id/tabhost"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/slash" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/load"
+                android:layout_width="fill_parent"
+                android:layout_height="20dp"
+                android:background="@drawable/btn_red"
+                android:text="Loading ..."
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#fff"
+                android:textSize="13dp" />
+
+            <HorizontalScrollView
+                android:id="@+id/scroller"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:fillViewport="true"
+                android:scrollbars="none" >
+
+                <TabWidget
+                    android:id="@android:id/tabs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_margin="0dp"
+                    android:fadingEdgeLength="30dp"
+                    android:padding="0dp" />
+            </HorizontalScrollView>
+
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="4dp"
+                android:background="@color/dark_gray"
+                android:orientation="vertical" />
+
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:isScrollContainer="true"
+                android:padding="0dp" />
+        </LinearLayout>
+    </TabHost>
+
+    <LinearLayout
+        android:id="@+id/slash"
+        android:layout_width="fill_parent"
+        android:layout_height="4dp"
+        android:layout_above="@+id/next"
+        android:background="@color/dark_gray"
+        android:orientation="vertical" />
+
+    <Button
+        android:id="@+id/next"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button_layout"
+        android:text="Next"
+        android:textSize="20dp" />
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/next"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

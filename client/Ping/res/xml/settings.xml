@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen android:key="preferences"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+		<ListPreference
+            android:key="dataLimit"
+            android:title="Edit data plan limit"
+            android:summary="Change monthly data plan limit"
+            android:entries="@array/dataLimitTexts"
+            android:entryValues="@array/dataLimitValues"
+        />
+</PreferenceScreen>

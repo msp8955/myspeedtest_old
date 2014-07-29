@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">My Speed Test</string>
+    <string name="title_activity_privacy">TERMS AND CONDITIONS</string>
+    <string name="title_activity_start">StartActivity</string>
+    <string name="configuration">CONFIGURATION</string>
+    <string name="title_activity_data_cap">CHOOSE DATA LIMIT</string>
+    <string name="title_activity_main">MEASUREMENT</string>
+    <string name="title_activity_settings">SETTINGS</string>
+    <string name="title_activity_contact">ENTER CONTACT DETAILS</string>
+    <string name="accept">Accept</string>
+    <string name="decline">Decline</string>
+    <string name="enter">Enter</string>
+    <string name="skip">Skip</string>
+    <string name="skip_config">Skip Configuration</string>
+    <string name="cancel">Cancel</string>
+    <string name="testButton">Full Test</string>
+    <string name="testRunning">Please wait while we are waiting for test output.</string>
+    <string name="pingButton">Latency</string>
+    <string name="wifiButton">Wifi</string>
+    <string name="usageButton">Usage</string>
+    <string name="throughputButton">Throughput</string>
+    <string name="configButton">Settings</string>
+    <string name="cancelButton">Cancel</string>
+    <string name="save">Save</string>
+    <string name="back">Back</string>
+    <string name="message_data_cap">Which of the following options is the closest to your monthly data plan limit?</string>
+    <string name="message_contact">Enter your email address to be eligible for any prizes offered for participating in any of our studies. Without your contact details, the research team will not be able to contact you due to our anonymization policy</string>
+    <string name="ga_api_key">UA\-35919226\-1</string>
+    <string name="action_settings">Settings</string>
+
+</resources>
