@@ -206,103 +206,6 @@ public class Values extends Application{
 		//return PING_SERVERS;
 	}
 
-	public void loadValues(){
-		/*
-
-		try {
-			FREQUENCY_SECS = Integer.parseInt(PreferencesUtil.getDataString("frequency_secs",this));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		try {
-			THROUGHPUT_FREQ = Integer.parseInt(PreferencesUtil.getDataString("throughput_freq",this));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		try {
-			UPLINKPORT = Integer.parseInt(PreferencesUtil.getDataString("uplink_port",this));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		try {
-			UPLINK_DURATION = Integer.parseInt(PreferencesUtil.getDataString("uplink_duration",this));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		try {
-			DOWNLINKPORT = Integer.parseInt(PreferencesUtil.getDataString("downlink_port",this));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		try {
-			DOWNLINK_DURATION = Integer.parseInt(PreferencesUtil.getDataString("downlink_duration",this));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		try {
-			TCP_HEADER_SIZE = Integer.parseInt(PreferencesUtil.getDataString("tcp_headersize","",this));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		try {
-			TCP_PACKET_SIZE = Integer.parseInt(PreferencesUtil.getDataString("tcp_packetsize",this));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-
-		try {
-			
-			THROUGHPUT_SERVER_ADDRESS = PreferencesUtil.getDataString("throughput_server_address",THROUGHPUT_SERVER_ADDRESS,this);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		try {
-			API_SERVER_ADDRESS = PreferencesUtil.getDataString("api_server_address",API_SERVER_ADDRESS,this);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		try {
-			SIGNALSTRENGTH_TIMEOUT = Integer.parseInt(PreferencesUtil.getDataString("signalstrength_timeout",this));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		try {
-			WIFI_TIMEOUT = Integer.parseInt(PreferencesUtil.getDataString("wifi_timeout",this));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		try {
-			UNAVAILABLE_CELLID = PreferencesUtil.getDataString("unavailable_cellid",UNAVAILABLE_CELLID,this);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		try {
-			UNAVAILABLE_CELLLAC = PreferencesUtil.getDataString("unavailable_celllac",UNAVAILABLE_CELLLAC,this);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		try {
-			THREADPOOL_MAX_SIZE = Integer.parseInt(PreferencesUtil.getDataString("threadpool_max_size",this));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		try {
-			THREADPOOL_KEEPALIVE_SEC = Integer.parseInt(PreferencesUtil.getDataString("threadpool_keepalive_sec",this));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		*/
-	}
-
 	public void insertValues(JSONObject obj){
 		Iterator<?> iterate = obj.keys();
 
@@ -312,11 +215,9 @@ public class Values extends Application{
 			try {
 				String value = obj.getString(key);
 				PreferencesUtil.setDataString(key, value,this);
-
 			} catch (JSONException e) {
-
+				e.printStackTrace();
 			}
-
 		}
 
 		try {
@@ -330,13 +231,9 @@ public class Values extends Application{
 				Address address2 = new Address(pingObj.getString("ipaddress"),pingObj.getString("tag"), "firsthop");
 				PING_SERVERS.add(address2);
 			}
-
-
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-
-
 
 	}
 
@@ -344,14 +241,12 @@ public class Values extends Application{
 		return "Values";
 	}
 
-
 	public ArrayList<Screen> screenBuffer = new ArrayList<Screen>();
 
 	public void AddScreen(boolean isOn){
 		screenBuffer.add(new Screen(util.getUTCTime(),util.getLocalTime(),isOn));
 
 	}
-
 
 	public void incrementThroughput(){
 		int throughput_count = getThroughput()+1;
@@ -364,8 +259,6 @@ public class Values extends Application{
 		throughput_count%=THROUGHPUT_FREQ;
 		setThroughput(throughput_count);
 	}
-
-
 
 	public boolean doThroughput(){
 		return getThroughput()==0;

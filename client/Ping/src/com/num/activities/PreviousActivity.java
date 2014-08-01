@@ -36,7 +36,6 @@ public class PreviousActivity extends TrackedActivity
 		
 		activity = this;
 		session = (Values) getApplicationContext();
-		session.loadValues();
 		serverhelper = new ThreadPoolHelper(5,10);
 		ThreadPoolHelper serverhelper = new ThreadPoolHelper(10,30);
 		serverhelper.execute(new ValuesTask(this,new FakeListener()));
