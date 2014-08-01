@@ -38,7 +38,6 @@ public class SettingsActivity extends Activity {
 		
 		activity = this;
 		session = (Values) getApplicationContext();
-		session.loadValues();
 		listview = (ListView) findViewById(R.id.settings_list_view);
 		userhelp = new UserDataHelper(activity);
 		
