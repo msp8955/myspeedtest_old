@@ -25,8 +25,6 @@ public class PingHelper {
 	public static CommandLineUtil cmdUtil;
 
 	public static LastMile firstHopHelp(Address address, int count) {
-
-
 		LastMile p 			= null;
 		int ttl 		= 1;
 		String ipDst 	= address.getIp();
@@ -35,12 +33,10 @@ public class PingHelper {
 		String output 	= "";
 
 		cmdUtil = new CommandLineUtil();
-		int hopCount = 1;
 		output = cmdUtil.runCommand(cmd, ipDst, options);
 
 		try{
-
-			if (!output.contains("ttl")) {
+			if (!output.contains("ttl")) { // OMG this is cheesy... I will clean up this later XD
 				if (!output.contains("From")){
 					while(!output.contains("From")) {
 						options 	= "-n -s 56 -c 1 -t " + ++ttl;
@@ -123,6 +119,7 @@ public class PingHelper {
 		String hostAddr = "";
 		String ipSrc = "";
 		SummaryStatistics ss = new SummaryStatistics();
+		
 		try {
 			hostAddr = InetAddress.getByName(ipDst).getHostAddress();
 			ipSrc = InetAddress.getLocalHost().toString();
