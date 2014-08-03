@@ -1,10 +1,10 @@
 MySpeedTest
 ===========
 Easy Install:
+  
+  * 1) Download from the market https://play.google.com/store/apps/details?id=com.num
 
-  1) Download from the market https://play.google.com/store/apps/details?id=com.num
-
-  2) Rate our app.
+  * 2) Rate our app.
 
 Static Install:
  
