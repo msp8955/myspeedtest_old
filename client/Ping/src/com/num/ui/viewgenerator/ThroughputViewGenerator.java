@@ -69,6 +69,4 @@ public class ThroughputViewGenerator extends ViewGenerator{
 			}
 		});
 	}
-	
-
 }
