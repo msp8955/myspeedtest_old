@@ -17,3 +17,4 @@ Static Install:
   4) Install My Speed Test - debug.apk if you want advanced functions.
  
   5) ENJOY and don't forget to rate our app at the market XD.
+ 
