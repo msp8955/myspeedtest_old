@@ -31,7 +31,6 @@ import com.num.utils.CommandLineUtil;
 import com.num.utils.ThroughputUtil;
 
 public class ThroughputHelper {
-	
 	public static CommandLineUtil cmdUtil;
 	public static String throughputOutput;
 	public static Throughput t = new Throughput();
@@ -39,6 +38,7 @@ public class ThroughputHelper {
 	
 	/**
 	 * Pinghelp helps run ping command by creating cmd and inputs
+	 * 
 	 * @param responseListener 
 	 * @return
 	 */
@@ -48,23 +48,18 @@ public class ThroughputHelper {
 		t = new Throughput();
 		
 		try {
-			Link down=tu.downlinkmeasurement(context,new ThroughputListener());
-			t.setDownLink(down);
+			t.setDownLink(tu.downlinkmeasurement(context,new ThroughputListener()));
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		try {
-			Link up=tu.uplinkmeasurement(context,new ThroughputListener());
-			t.setUpLink(up);
+			t.setUpLink(tu.uplinkmeasurement(context,new ThroughputListener()));
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -74,45 +69,7 @@ public class ThroughputHelper {
 		
 	}
 	
-
-
 	public static class ThroughputListener extends BaseResponseListener{
-
-		public void onCompletePing(Ping response) { }
-
-		public void onCompleteDevice(Device response) { }
-
-		public void onCompleteMeasurement(Measurement response) { }
-
-		public void onCompleteOutput(MainModel model) { }
-
-		public void onComplete(String response) { }
-
-		public void onUpdateProgress(int val){ }
-
-		public void onCompleteGPS(GPS response) { }
-
-		public void makeToast(String text) { }
-
-		public void onCompleteSignal(String signalStrength) { }
-		public void onCompleteUsage(Usage response) { }
-
-		public void onCompleteThroughput(Throughput response) { }
-
-		public void onCompleteWifi(Wifi response) { }
-
-		public void onCompleteBattery(Battery response) { }
-
-		public void onCompleteNetwork(Network response) { }
-
-		public void onCompleteSIM(Sim response) { }
-
-		public void onCompleteSummary(JSONObject Object) { }
-
-		public void onFail(String response) { }
-
-		public void onCompleteLastMile(LastMile lastMile) { }
-
 		public void onUpdateUpLink(Link link) {
 			t.setUpLink(link);
 			listener.onUpdateThroughput(t);
@@ -120,41 +77,35 @@ public class ThroughputHelper {
 
 		public void onUpdateDownLink(Link link) {
 			t.setDownLink(link);
-			listener.onUpdateThroughput(t);
-			
+			listener.onUpdateThroughput(t);	
 		}
 
 		public void onUpdateThroughput(Throughput throughput) {
 			listener.onUpdateThroughput(throughput);
-			
 		}
-
-		public void onCompleteTraceroute(Traceroute traceroute) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		public void onCompleteTracerouteHop(TracerouteEntry traceroute) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		public void onCompleteWarmupExperiment(WarmupExperiment experiment) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		public void onCompleteLoss(Loss loss) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		public void onCompleteCensorship(Censorship censorship) {
-			// TODO Auto-generated method stub
-			
-		}
+		
+		public void onCompletePing(Ping response) { }
+		public void onCompleteDevice(Device response) { }
+		public void onCompleteMeasurement(Measurement response) { }
+		public void onCompleteOutput(MainModel model) { }
+		public void onComplete(String response) { }
+		public void onUpdateProgress(int val){ }
+		public void onCompleteGPS(GPS response) { }
+		public void makeToast(String text) { }
+		public void onCompleteSignal(String signalStrength) { }
+		public void onCompleteUsage(Usage response) { }
+		public void onCompleteThroughput(Throughput response) { }
+		public void onCompleteWifi(Wifi response) { }
+		public void onCompleteBattery(Battery response) { }
+		public void onCompleteNetwork(Network response) { }
+		public void onCompleteSIM(Sim response) { }
+		public void onCompleteSummary(JSONObject Object) { }
+		public void onFail(String response) { }
+		public void onCompleteLastMile(LastMile lastMile) { }
+		public void onCompleteTraceroute(Traceroute traceroute) {}
+		public void onCompleteTracerouteHop(TracerouteEntry traceroute) {}
+		public void onCompleteWarmupExperiment(WarmupExperiment experiment) {}
+		public void onCompleteLoss(Loss loss) {}
+		public void onCompleteCensorship(Censorship censorship) {}
 	}
-
-
-
 }

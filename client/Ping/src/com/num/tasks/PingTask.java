@@ -1,18 +1,14 @@
 package com.num.tasks;
 
-import java.util.List;
 import java.util.Map;
 
 import android.content.Context;
 
-import com.num.database.datasource.LatencyDataSource;
 import com.num.helpers.PingHelper;
 import com.num.listeners.ResponseListener;
 import com.num.models.Address;
 import com.num.models.LastMile;
 import com.num.models.Ping;
-import com.num.models.PingData;
-import com.num.utils.DeviceUtil;
 
 /*
  * Measurement Task 
@@ -35,7 +31,6 @@ public class PingTask extends ServerTask {
 
 	@Override
 	public void runTask() {
-
 		if (dst.getType().equals("ping")) {
 			Ping ping = PingHelper.pingHelp(dst, count);
 			this.getResponseListener().onCompletePing(ping);

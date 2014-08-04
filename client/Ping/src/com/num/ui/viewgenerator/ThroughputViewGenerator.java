@@ -38,8 +38,6 @@ public class ThroughputViewGenerator extends ViewGenerator{
 
 	@Override
 	public ViewHolder fillViewHolder(View view, LayoutInflater inflater) {
-		
-		
 		holder.first =  (TextView) view.findViewById(R.id.key);
 		holder.second =  (TextView) view.findViewById(R.id.message);
 		holder.progress =  (ProgressBar) view.findViewById(R.id.value);
@@ -47,6 +45,7 @@ public class ThroughputViewGenerator extends ViewGenerator{
 		
 		return holder;
 	}
+	
 	@Override
 	public void populateView(Row item,final Context context,View view) {
 		
@@ -70,6 +69,4 @@ public class ThroughputViewGenerator extends ViewGenerator{
 			}
 		});
 	}
-	
-
 }

@@ -16,25 +16,20 @@ public class ThroughputTask extends ServerTask{
 	
 	ThreadPoolHelper serverhelper;
 	
-	public ThroughputTask(Context context, Map<String, String> reqParams, 
-			ResponseListener listener) {
+	public ThroughputTask(Context context, Map<String, String> reqParams, ResponseListener listener) {
 		super(context, new HashMap<String, String>(), listener);
-		serverhelper = new ThreadPoolHelper(Values.THREADPOOL_MAX_SIZE,
-				Values.THREADPOOL_KEEPALIVE_SEC);
+		serverhelper = new ThreadPoolHelper(Values.THREADPOOL_MAX_SIZE, Values.THREADPOOL_KEEPALIVE_SEC);
 	}
 
 	@Override
 	public void runTask() {
-		
 		try {
 			Throughput t = ThroughputHelper.getThroughput(getContext(),getResponseListener());			
 			//String connection = DeviceUtil.getNetworkInfo(getContext());			
 			ThroughputDataSource datasource = new ThroughputDataSource(getContext());			
 			datasource.insert(t);
 			getResponseListener().onCompleteThroughput(t);
-			serverhelper.execute(new MeasurementTask(getContext(), t, true, new FakeListener()));
-			
-			
+			serverhelper.execute(new MeasurementTask(getContext(), t, true, new FakeListener()));			
 		} catch (Exception e) {
 			getResponseListener().onException(e);
 		}

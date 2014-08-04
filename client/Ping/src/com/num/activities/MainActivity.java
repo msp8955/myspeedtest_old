@@ -44,6 +44,7 @@ public class MainActivity extends Activity {
 		
 		activity = this;
 		session = (Values) getApplicationContext();
+//		session.DEBUG = true;
 		listview = (ListView) findViewById(R.id.main_list_view);
 
 		serverhelper = new ThreadPoolHelper(10, 30);
