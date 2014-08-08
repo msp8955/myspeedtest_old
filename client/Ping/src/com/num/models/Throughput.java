@@ -80,42 +80,21 @@ public class Throughput implements MainModel{
 			upL = (int)upLink.speedInBits();
 		}
 		
+		if(isComplete) {
+			data.add(new Row("TEST RESULT"));
+		}else {
+			data.add(new Row("TEST IN PROGRESS ..."));
+		}
+		
+		//Display download throughput
 		if (downL>0) {
 			data.add(new Row(new LinkGraph(downLink, Values.DOWNLINK_DURATION, "Download", "downlink")));
 		}
 		
+		//Display upload throughput
 		if (upL>0) {
 			data.add(new Row(new LinkGraph(upLink, Values.UPLINK_DURATION, "Upload", "uplink")));
 		}
-
-		if(isComplete) {
-			
-			ThroughputDataSource dataSource = new ThroughputDataSource(context);
-			
-			DatabaseOutput output = dataSource.getOutput();
-			HashMap<String,ArrayList<GraphPoint>> graphPoints = dataSource.getGraphData();
-			if (output.getDouble("avg_download")>0) {
-				String connection = DeviceUtil.getNetworkInfo(context);
-				
-				data.add(new Row("GRAPHS"));
-				data.add(new Row("Avg Download",output.getDouble("avg_download") + " Mbps"));
-				GraphData graphdata = new GraphData(graphPoints.get("downlink"));
-				graphdata.setxAxisTitle("Historical trend of Download tests for " + connection);				
-				data.add(new Row(graphdata));
-				
-				if (output.getDouble("avg_upload")>0) {					
-					data.add(new Row("Avg Upload",output.getDouble("avg_upload") + " Mbps"));
-					GraphData graphdata2 = new GraphData(graphPoints.get("uplink"));
-					graphdata2.setxAxisTitle("Historical trend of Upload tests for " + connection);
-					data.add(new Row(graphdata2));
-				}
-			
-			}
-			
-		} else {
-			data.add(new Row("In progress ..."));
-		}
-
 
 		return data;
 	}

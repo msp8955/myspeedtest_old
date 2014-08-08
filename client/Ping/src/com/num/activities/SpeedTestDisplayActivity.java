@@ -1,6 +1,7 @@
 package com.num.activities;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.json.JSONObject;
 
@@ -17,6 +18,8 @@ import android.widget.TextView;
 
 import com.google.android.apps.analytics.easytracking.TrackedActivity;
 import com.num.Values;
+import com.num.database.DatabaseOutput;
+import com.num.database.datasource.ThroughputDataSource;
 import com.num.helpers.GAnalytics;
 import com.num.helpers.TaskHelper;
 import com.num.helpers.ThreadPoolHelper;
@@ -25,6 +28,8 @@ import com.num.models.Battery;
 import com.num.models.Censorship;
 import com.num.models.Device;
 import com.num.models.GPS;
+import com.num.models.GraphData;
+import com.num.models.GraphPoint;
 import com.num.models.LastMile;
 import com.num.models.Link;
 import com.num.models.Loss;
@@ -42,6 +47,7 @@ import com.num.models.WarmupExperiment;
 import com.num.models.Wifi;
 import com.num.ui.UIUtil;
 import com.num.ui.adapter.ItemAdapter;
+import com.num.utils.DeviceUtil;
 import com.num.R;
 
 public class SpeedTestDisplayActivity extends TrackedActivity {
@@ -62,7 +68,10 @@ public class SpeedTestDisplayActivity extends TrackedActivity {
 		super.onCreate(savedInstanceState);
 		activity = this;
 		session = (Values) this.getApplicationContext();
-		showDisplayPage();
+		loadPage();
+		ArrayList<Row> data = new ArrayList<Row>();
+		data.add(new Row("TEST RESULT"));
+		showDisplayPage(data);
 		
 		final Bundle extras = getIntent().getExtras();
 		final String key = extras.getString("model_key");
@@ -85,16 +94,72 @@ public class SpeedTestDisplayActivity extends TrackedActivity {
 	
 	public void showLoadPage() {
 //		setContentView(R.layout.load_screen);
-		startTestBtn.setText("Running " + title.getText().toString().toLowerCase() + " test...");
+		startTestBtn.setText("Running test...");
 		startTestBtn.setClickable(false);
+		ArrayList<Row> data = new ArrayList<Row>();
+		data.add(new Row("TEST IN PROGRESS ..."));
+		showDisplayPage(data);
 	}
 	
-	public void showDisplayPage() {
+	public void loadPage() {
 		setContentView(R.layout.item_view_start_button);
 		title =  (TextView) findViewById(R.id.start_title);
 		listview = (ListView) findViewById(R.id.main_list_view);	
 		description = (TextView) findViewById(R.id.description);
 		startTestBtn = (Button) findViewById(R.id.start_test);
+	}
+	
+	public void showDisplayPage(ArrayList<Row> data) {
+		
+		//Display graph of download and upload throughput history
+		ThroughputDataSource dataSource = new ThroughputDataSource(this.getApplicationContext());
+		
+		DatabaseOutput output = dataSource.getOutput();
+		HashMap<String,ArrayList<GraphPoint>> graphPoints = dataSource.getGraphData();
+		
+		if (output.getDouble("avg_download")>0) {
+			
+			data.add(new Row("HISTORY"));
+			
+			String connection = DeviceUtil.getNetworkInfo(this.getApplicationContext());
+			
+			data.add(new Row("Avg Download",output.getDouble("avg_download") + " Mbps"));
+			GraphData graphdata = new GraphData(graphPoints.get("downlink"));
+			graphdata.setxAxisTitle("Historical trend of Download tests for " + connection);				
+			data.add(new Row(graphdata));
+			
+			if (output.getDouble("avg_upload")>0) {		
+				data.add(new Row("Avg Upload",output.getDouble("avg_upload") + " Mbps"));
+				GraphData graphdata2 = new GraphData(graphPoints.get("uplink"));
+				graphdata2.setxAxisTitle("Historical trend of Upload tests for " + connection);
+				data.add(new Row(graphdata2));
+			}
+			
+		}else{
+			data.add(new Row("No past history available"));
+		}
+		
+		//Show data in listview
+		boolean isComplete = false; //true if both download and upload throughput tests ran
+		if(data.size()!=0){
+			ItemAdapter itemadapter = new ItemAdapter(activity,data);
+			for(Row cell: data) {
+				itemadapter.add(cell);
+				if (cell.first.equals("TEST RESULT")) {
+					isComplete = true;
+				}
+			}
+			listview.setAdapter(itemadapter);
+
+			itemadapter.notifyDataSetChanged();
+			UIUtil.setListViewHeightBasedOnChildren(listview,itemadapter);
+		}
+		
+		//Change back run button
+		if (isComplete) {
+			startTestBtn.setText("Run test");
+			startTestBtn.setClickable(true);
+		}
 	}
 
 	@Override
@@ -102,8 +167,7 @@ public class SpeedTestDisplayActivity extends TrackedActivity {
 		super.finish();
 	
 		try{
-		serverhelper.shutdown();
-		
+			serverhelper.shutdown();
 		} catch (Exception e) {	}
 	}
 
@@ -246,23 +310,11 @@ public class SpeedTestDisplayActivity extends TrackedActivity {
 	private Handler UIHandler = new Handler(){
 		public void  handleMessage(Message msg) {
 			
+			//Get model data
 			MainModel item = (MainModel)msg.obj;
-			
-			startTestBtn.setText("Re-run test");
-			startTestBtn.setClickable(true);
-			
 			ArrayList<Row> cells = item.getDisplayData(activity);
-
-			if(cells.size()!=0){
-				ItemAdapter itemadapter = new ItemAdapter(activity,cells);
-				for(Row cell: cells)
-					itemadapter.add(cell);
-				listview.setAdapter(itemadapter);
-
-
-				itemadapter.notifyDataSetChanged();
-				UIUtil.setListViewHeightBasedOnChildren(listview,itemadapter);
-			}
+			//Display data
+			showDisplayPage(cells);
 
 		}
 	};
