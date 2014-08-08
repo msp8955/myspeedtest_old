@@ -1,7 +1,5 @@
 package com.num.activities;
 
-import kankan.wheel.widget.WheelView;
-import kankan.wheel.widget.adapters.ArrayWheelAdapter;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;

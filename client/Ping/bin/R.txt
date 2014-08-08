@@ -62,9 +62,7 @@ int drawable team 0x7f02002d
 int drawable throughput 0x7f02002e
 int drawable unknown_network 0x7f02002f
 int drawable usage 0x7f020030
-int drawable wheel_bg 0x7f020031
-int drawable wheel_val 0x7f020032
-int drawable wifi 0x7f020033
+int drawable wifi 0x7f020031
 int id SCROLLER_ID 0x7f0d0049
 int id aboutus 0x7f0d005b
 int id action_settings 0x7f0d0069
