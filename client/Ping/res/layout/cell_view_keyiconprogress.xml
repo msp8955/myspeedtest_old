@@ -25,7 +25,6 @@ android:clickable="false"
     </TextView>
 
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="140dp"
         android:layout_height="fill_parent"
         android:orientation="horizontal" >
