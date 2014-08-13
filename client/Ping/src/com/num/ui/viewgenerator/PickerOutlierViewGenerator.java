@@ -91,7 +91,9 @@ public class PickerOutlierViewGenerator extends ViewGenerator{
 				int pos = holder.spinner.getSelectedItemPosition();
 				picker.setOutlierFraction(picker.getOutlierOptions()[pos]);
 				holder.second.setText((int)(picker.getOutlierFraction()*100)+"%");
-				picker.updateGraph();
+				
+				if(picker.getGraphDataWithoutOutliers().getPoints().size()>4)
+					picker.updateGraph();
 				
 			}
 

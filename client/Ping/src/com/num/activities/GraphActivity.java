@@ -65,8 +65,8 @@ import com.num.ui.adapter.ItemAdapter;
 import com.num.R;
 
 public class GraphActivity extends TrackedActivity {
-	Values values;
-	DatabasePicker picker;
+	private Values values;
+	private DatabasePicker picker;
 
 	private ListView listview;
 	private ChartView chart;
@@ -91,7 +91,7 @@ public class GraphActivity extends TrackedActivity {
 		super.onStart();
 		
 		TextView title = (TextView) this.findViewById(R.id.start_title);
-		
+		picker.setOutlierFraction(0);
 		if (picker.getChartType().equals("area"))
 			chart = (TimelineView) this.findViewById(R.id.timeline);
 		else if (picker.getChartType().equals("bar")){
