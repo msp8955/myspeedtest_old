@@ -14,7 +14,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import com.num.database.DatabaseOutput;
 import com.num.database.mapping.ApplicationMapping;
-import com.num.database.mapping.LatencyMapping;
 import com.num.helpers.GAnalytics;
 import com.num.models.Application;
 import com.num.models.GraphPoint;
@@ -216,7 +215,7 @@ public class ApplicationDataSource extends DataSource {
 	@Override
 	public Date extractTime(Map<String, String> data) {
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-		String dateString = data.get(LatencyMapping.COLUMN_TIME);
+		String dateString = data.get(ApplicationMapping.COLUMN_TIME);
 		try {
 			return df.parse(dateString);
 		} catch (ParseException e) {

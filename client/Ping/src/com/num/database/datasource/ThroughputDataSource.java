@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
@@ -16,6 +17,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.num.database.DatabaseOutput;
 import com.num.database.mapping.BaseMapping;
@@ -50,25 +52,27 @@ public class ThroughputDataSource extends DataSource {
 	public void addRow(Link l, String type, String connectionType) {
 		ContentValues value = new ContentValues();		
 		
-	    final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	    String time = sdf.format(new Date());		
-		value.put(ThroughputMapping.COLUMN_TIME, time);
+		value.put(ThroughputMapping.COLUMN_TIME, getTime());
 		value.put(ThroughputMapping.COLUMN_SPEED, "" + l.speedInBits());
 		value.put(ThroughputMapping.COLUMN_TYPE, type);
 		value.put(ThroughputMapping.COLUMN_CONNECTION,connectionType);
-		long insertId = database.insert(dbHelper.getTableName(), null, value);
-		Cursor cursor = database.query(dbHelper.getTableName(),
-				getColumns(), ThroughputMapping.COLUMN_ID + " = " + insertId, null, null, null, null);
-		cursor.moveToFirst();
-		Map<String,String> newThroughputData = dbHelper.getDatabaseColumns().getDataStore(cursor);
-		cursor.close();
+		
+		if(!database.isOpen()) {
+			database = dbHelper.getWritableDatabase();
+		}
+		try {
+			database.insert(dbHelper.getTableName(), null, value);
+		} catch (Exception e) {
+			Log.d("db", e.getLocalizedMessage());
+		}
+		
 	}
 	
 	protected void insertModel(Model model) {
 		try {
-		String currentConnectionType = DeviceUtil.getNetworkInfo(context);
-		addRow(((Throughput)model).getDownLink(), "downlink", currentConnectionType);
-		addRow(((Throughput)model).getUpLink(), "uplink", currentConnectionType);
+			String currentConnectionType = DeviceUtil.getNetworkInfo(context);
+			addRow(((Throughput)model).getDownLink(), "downlink", currentConnectionType);
+			addRow(((Throughput)model).getUpLink(), "uplink", currentConnectionType);
 		} catch (Exception e) {
 			GAnalytics.log(GAnalytics.DATABASE, "Insert Fail " + dbHelper.getDBName(),e.getMessage());
 		}
@@ -91,15 +95,15 @@ public class ThroughputDataSource extends DataSource {
 			
 			if(data.get(ThroughputMapping.COLUMN_TYPE).equals("uplink")){
 				try {
-				totalUpload+=(int)Double.parseDouble(data.get(ThroughputMapping.COLUMN_SPEED));
-				countUpload++;
+					totalUpload+=(int)Double.parseDouble(data.get(ThroughputMapping.COLUMN_SPEED));
+					countUpload++;
 				} catch (Exception e) {
 					continue;
 				}				
 			} else if(data.get(ThroughputMapping.COLUMN_TYPE).equals("downlink")){
 				try {
-				totalDownload+=(int)Double.parseDouble(data.get(ThroughputMapping.COLUMN_SPEED));
-				countDownload++;
+					totalDownload+=(int)Double.parseDouble(data.get(ThroughputMapping.COLUMN_SPEED));
+					countDownload++;
 				} catch (Exception e) {
 					continue;
 				}				
@@ -153,7 +157,7 @@ public class ThroughputDataSource extends DataSource {
 			}						
 		}
 		
-		HashMap collection = new HashMap<String,ArrayList<GraphPoint>>();
+		HashMap<String,ArrayList<GraphPoint>> collection = new HashMap<String,ArrayList<GraphPoint>>();
 		
 		collection.put("uplink", uploadPoints);
 		collection.put("downlink", downloadPoints);
@@ -169,11 +173,11 @@ public class ThroughputDataSource extends DataSource {
 
 	@Override
 	public Date extractTime(Map<String, String> data) {
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
 		String dateString =  data.get(ThroughputMapping.COLUMN_TIME);
 		try {
 			return df.parse(dateString);
-		} catch (ParseException e) {			
+		} catch (ParseException e) {
 			e.printStackTrace();
 			return new Date();
 		}
