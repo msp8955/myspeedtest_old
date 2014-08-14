@@ -1,24 +1,18 @@
 package com.num.activities;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import com.num.R;
 import com.num.Values;
-import com.num.database.DatabasePicker;
-import com.num.database.datasource.LatencyDataSource;
-import com.num.database.mapping.LatencyMapping;
 import com.num.helpers.GAnalytics;
 import com.num.helpers.ServiceHelper;
 import com.num.helpers.ThreadPoolHelper;
 import com.num.listeners.FakeListener;
 import com.num.models.ActivityItem;
 import com.num.models.Row;
-import com.num.tasks.SignalStrengthTask;
 import com.num.tasks.ValuesTask;
 import com.num.ui.UIUtil;
 import com.num.ui.adapter.ItemAdapter;
-import com.num.utils.DeviceUtil;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -100,12 +94,39 @@ public class MainActivity extends Activity {
 							Intent myIntent = new Intent(activity,
 									FullDisplayActivity.class);
 							myIntent.putExtra("model_key", "censorship");
+							myIntent.putExtra("model_description", "Censorship test");
+							myIntent.putExtra("model_description_sub", "Tests whether websites are blocked");
 							myIntent.putExtra("time", "15");
 							startActivity(myIntent);
 						}
 	
 					}, R.drawable.censorship, null)));
-		}
+			cells.add(new Row(new ActivityItem("TraceRoute",
+					"Trace hops to Georgia Tech server", new Handler() {
+						public void handleMessage(Message msg) {
+							Intent myIntent = new Intent(activity,
+									FullDisplayActivity.class);
+							myIntent.putExtra("model_key", "traceroute");
+							myIntent.putExtra("model_description", "Traceroute");
+							myIntent.putExtra("model_description_sub", "Trace hops to Georgia Tech server");
+							startActivity(myIntent);
+						}
+
+					}, R.drawable.team, null)));
+//			cells.add(new Row(new ActivityItem("Signal Strength",
+//					"Signal Strength debugging", new Handler() {
+//						public void handleMessage(Message msg) {
+//							ThreadPoolHelper serverhelper = new ThreadPoolHelper(
+//									Values.THREADPOOL_MAX_SIZE,
+//									Values.THREADPOOL_KEEPALIVE_SEC);
+//							serverhelper.executeOnUIThread(activity,
+//									new SignalStrengthTask(activity,
+//											new HashMap<String, String>(),
+//											new FakeListener()));
+//						}
+//					}, R.drawable.team, null)));
+		} //end of session.DEBUG==true
+		
 		cells.add(new Row(new ActivityItem("Configure", "Change preference",
 				new Handler() {
 					public void handleMessage(Message msg) {
@@ -126,60 +147,6 @@ public class MainActivity extends Activity {
 					}
 
 				}, R.drawable.team, null)));
-
-		if (session.DEBUG == true) {
-			cells.add(new Row(new ActivityItem("Graphing", "Quick Graph",
-					new Handler() {
-						public void handleMessage(Message msg) {
-
-							DatabasePicker picker = session
-									.createPicker(new LatencyDataSource(
-											activity));
-							picker.setTitle("Latency Graph");
-							picker.filterBy(LatencyMapping.COLUMN_TYPE, "ping",
-									"Type");
-							picker.filterBy(LatencyMapping.COLUMN_DSTIP,
-									"gsoogle", "Destination");
-							picker.filterBy(LatencyMapping.COLUMN_MEASUREMENT,
-									"average", "Metric");
-							picker.filterBy(LatencyMapping.COLUMN_CONNECTION,
-									DeviceUtil.getNetworkInfo(activity),
-									"Connection");
-							Intent myIntent = new Intent(activity,
-									GraphActivity.class);
-							activity.startActivity(myIntent);
-
-						}
-
-					}, R.drawable.measure, null)));
-		}
-		if (session.DEBUG == true) {
-			cells.add(new Row(new ActivityItem("TraceRoute",
-					"Trace hops to Georgia Tech server", new Handler() {
-						public void handleMessage(Message msg) {
-							Intent myIntent = new Intent(activity,
-									FullDisplayActivity.class);
-							myIntent.putExtra("model_key", "traceroute");
-							startActivity(myIntent);
-						}
-
-					}, R.drawable.team, null)));
-		}
-
-		if (session.DEBUG == true) {
-			cells.add(new Row(new ActivityItem("Signal Strength",
-					"Signal Strength debugging", new Handler() {
-						public void handleMessage(Message msg) {
-							ThreadPoolHelper serverhelper = new ThreadPoolHelper(
-									Values.THREADPOOL_MAX_SIZE,
-									Values.THREADPOOL_KEEPALIVE_SEC);
-							serverhelper.executeOnUIThread(activity,
-									new SignalStrengthTask(activity,
-											new HashMap<String, String>(),
-											new FakeListener()));
-						}
-					}, R.drawable.team, null)));
-		}
 
 		ItemAdapter itemadapter = new ItemAdapter(activity, cells);
 		for (Row cell : cells)
