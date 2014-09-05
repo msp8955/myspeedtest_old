@@ -38,7 +38,7 @@ public class MainActivity extends Activity {
 		
 		activity = this;
 		session = (Values) getApplicationContext();
-//		session.DEBUG = true;
+		//session.DEBUG = true;
 		listview = (ListView) findViewById(R.id.main_list_view);
 
 		serverhelper = new ThreadPoolHelper(10, 30);
@@ -112,7 +112,7 @@ public class MainActivity extends Activity {
 							startActivity(myIntent);
 						}
 
-					}, R.drawable.team, null)));
+					}, R.drawable.traceroute, null)));
 //			cells.add(new Row(new ActivityItem("Signal Strength",
 //					"Signal Strength debugging", new Handler() {
 //						public void handleMessage(Message msg) {

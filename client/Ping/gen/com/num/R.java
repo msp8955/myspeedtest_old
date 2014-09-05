@@ -87,9 +87,10 @@ public final class R {
         public static final int tab_text_selector=0x7f02002c;
         public static final int team=0x7f02002d;
         public static final int throughput=0x7f02002e;
-        public static final int unknown_network=0x7f02002f;
-        public static final int usage=0x7f020030;
-        public static final int wifi=0x7f020031;
+        public static final int traceroute=0x7f02002f;
+        public static final int unknown_network=0x7f020030;
+        public static final int usage=0x7f020031;
+        public static final int wifi=0x7f020032;
     }
     public static final class id {
         public static final int SCROLLER_ID=0x7f0d0049;
